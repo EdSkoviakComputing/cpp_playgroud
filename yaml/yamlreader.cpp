@@ -6,27 +6,18 @@
 #include "yaml.h"
 
 int main(int argc, char** argv) {
-/* Get file for input */
-
-    std::fstream fs ("models/Policy.yaml", std::fstream::in);
-
-/*
+    // get the data from the file, determine the size
+    std::fstream fs ("models/Policy.yaml", std::fsteam::in);
     std::filebuf* inbuf = fs.rdbuf();
-    char c; 
-    while ( (c = inbuf->sbumpc()) != EOF ) {
-        std::cout << c;
-    }
-    std::cout << "\n";
+    std::streamsize size = inbuf->in_avail(); 
 
-    fs.close();
-*/
+    // setup the parser objects
     yaml_parser_t parser;
-
     yaml_parser_initialize(&parser);
 
     
 }
 
-int read_handler(std::fstream* data, char* buffer, int size, int length) {
-    
+int read_handler(std::filebuf* data, char* buffer, int size, int length) {
+
 }
