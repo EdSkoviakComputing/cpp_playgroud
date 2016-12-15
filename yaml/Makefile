@@ -6,5 +6,5 @@ OBJS = yamlreader.o
 
 $(PROG) : $(OBJS)
 	$(CC) $(LDFLAGS) -o $(PROG) $(OBJS)
-yamlreader.o : yamlreader.cpp
+yamlreader.o : yamlreader.cpp yamlreader.h
 	$(CC) $(CPPFLAGS) -c yamlreader.cpp

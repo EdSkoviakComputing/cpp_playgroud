@@ -4,10 +4,9 @@
 #include <fstream>
 #include <iostream>
 #include <memory>
+#include <algorithm>
 #include "yaml.h"
-
-int read_handler(std::filebuf* data,
-        char* buffer, int size, int length);
+#include "yamlreader.h"
 
 int main(int argc, char** argv) {
     // get the data from the file, determine the size
@@ -19,7 +18,7 @@ int main(int argc, char** argv) {
 
     // setup temporary buffer and load the data for testing
     std::pair<char*, std::ptrdiff_t> result = std::get_temporary_buffer<char>(size);
-    int bytesRead = 0;
+    int* bytesRead;
     read_handler(inbuf, result.first, result.second, bytesRead);
     std::cout << "read_handler read " << bytesRead << " bytes...\n";
 
@@ -34,14 +33,14 @@ int main(int argc, char** argv) {
     
 }
 
-int read_handler(std::filebuf* data, char* buffer, int size, int length) {
+int read_handler(std::filebuf* data, char* buffer, int size, int* length) {
     // check to see if size bytes available in stream
     if (size > data->in_avail()) {
         // reset size
         size = data->in_avail();
     }
 
-    length = data->sgetn(buffer, size);
-    std::cout << length;
+    int bRead = data->sgetn(buffer, size);
+    //std::copy(&bRead, &bRead+1, length);
     return 0;
 }
