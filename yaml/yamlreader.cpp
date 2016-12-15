@@ -15,7 +15,7 @@ int main(int argc, char** argv) {
     std::filebuf* inbuf = fs.rdbuf();
     std::streamsize size = inbuf->in_avail(); 
 
-    std::cout << "Policy.yaml has " << size << " bytes...\n:";
+    std::cout << "Policy.yaml has " << size << " bytes...\n";
 
     // setup temporary buffer and load the data for testing
     std::pair<char*, std::ptrdiff_t> result = std::get_temporary_buffer<char>(size);
@@ -42,6 +42,6 @@ int read_handler(std::filebuf* data, char* buffer, int size, int length) {
     }
 
     length = data->sgetn(buffer, size);
-
+    std::cout << length;
     return 0;
 }
