@@ -6,6 +6,9 @@
 #include <memory>
 #include "yaml.h"
 
+int read_handler(std::filebuf* data,
+        char* buffer, int size, int length);
+
 int main(int argc, char** argv) {
     // get the data from the file, determine the size
     std::fstream fs ("models/Policy.yaml", std::fstream::in);
@@ -16,7 +19,7 @@ int main(int argc, char** argv) {
 
     // setup temporary buffer and load the data for testing
     std::pair<char*, std::ptrdiff_t> result = std::get_temporary_buffer<char>(size);
-    int bytesRead;
+    int bytesRead = 0;
     read_handler(inbuf, result.first, result.second, bytesRead);
     std::cout << "read_handler read " << bytesRead << " bytes...\n";
 
