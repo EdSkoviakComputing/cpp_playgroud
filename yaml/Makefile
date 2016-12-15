@@ -1,7 +1,7 @@
 PROG = yamlreader
 CC = g++
 CPPFLAGS = -Wall
-LDFLAGS = -lyaml
+LDFLAGS = -L/usr/local/lib -lyaml
 OBJS = yamlreader.o
 
 $(PROG) : $(OBJS)
