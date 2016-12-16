@@ -4,7 +4,6 @@
 #include <fstream>
 #include <iostream>
 #include <memory>
-#include <algorithm>
 #include "yaml.h"
 #include "yamlreader.h"
 
@@ -41,6 +40,6 @@ int read_handler(std::filebuf* data, char* buffer, int size, int* length) {
     }
 
     int bRead = data->sgetn(buffer, size);
-    //std::copy(&bRead, &bRead+1, length);
+    length = &bRead;
     return 0;
 }
