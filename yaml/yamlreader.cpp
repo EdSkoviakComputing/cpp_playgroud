@@ -16,30 +16,46 @@ int main(int argc, char** argv) {
     std::cout << "Policy.yaml has " << size << " bytes...\n";
 
     // setup temporary buffer and load the data for testing
-    std::pair<char*, std::ptrdiff_t> result = std::get_temporary_buffer<char>(size);
-    int* bytesRead;
-    read_handler(inbuf, result.first, result.second, bytesRead);
-    std::cout << "read_handler read " << bytesRead << " bytes...\n";
+    //std::pair<char*, std::ptrdiff_t> result = std::get_temporary_buffer<char>(size);
+    //int bytesRead = 1957;
+    //read_handler(inbuf, result.first, result.second, &bytesRead);
+    //std::cout << "read_handler read " << bytesRead << " bytes...\n";
 
     // setup the parser objects
     yaml_parser_t parser;
     yaml_parser_initialize(&parser);
+    yaml_parser_set_input(&parser, read_handler, inbuf);
+   
+    // do it!
+    
+    yaml_event_t event;
+    //yaml_parser_state_t state = YAML_PARSE_STREAM_START_STATE;
+    int done = 0;
+    while ( !done ) {
+      if (!yaml_parser_parse(&parser, &event)) {
+        std::cout << "Error in parsing\n";
+        break;
+      }
 
-  
+      std::cout << "---" << event.type << "---\n";
+      done = (event.type == YAML_STREAM_END_EVENT); 
+    }
+
     // cleanup
-    std::return_temporary_buffer(result.first);
+    // std::return_temporary_buffer(result.first);
+    yaml_parser_delete(&parser);
     fs.close();
     
 }
 
-int read_handler(std::filebuf* data, char* buffer, int size, int* length) {
+int read_handler(void* data, unsigned char* buffer, unsigned long int size, unsigned long int* length) {
     // check to see if size bytes available in stream
-    if (size > data->in_avail()) {
+    if (size > ((std::filebuf*)data)->in_avail()) {
         // reset size
-        size = data->in_avail();
+        size =((std::filebuf*)data)->in_avail();
     }
 
-    int bRead = data->sgetn(buffer, size);
-    length = &bRead;
+    int bRead = ((std::filebuf*)data)->sgetn((char*)buffer, size);
+    *length = bRead;
     return 0;
 }

@@ -2,5 +2,5 @@
  */
 
 // Function Prototypes
-int read_handler(std::filebuf* data,
-        char* buffer, int size, int* length);
+int read_handler(void* data, unsigned char* buffer, unsigned long int size, unsigned long int* length);
+
