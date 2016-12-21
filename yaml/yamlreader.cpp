@@ -4,7 +4,7 @@
 #include <fstream>
 #include <iostream>
 #include <memory>
-#include "yaml.h"
+#include <yaml.h>
 #include "yamlreader.h"
 
 int main(int argc, char** argv) {
@@ -50,7 +50,7 @@ int main(int argc, char** argv) {
 
 int read_handler(void* data, unsigned char* buffer, unsigned long int size, unsigned long int* length) {
     // check to see if size bytes available in stream
-    if (size > ((std::filebuf*)data)->in_avail()) {
+    if (size > (unsigned long int)((std::filebuf*)data)->in_avail()) {
         // reset size
         size =((std::filebuf*)data)->in_avail();
     }
