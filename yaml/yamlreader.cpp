@@ -16,9 +16,13 @@ int main(int argc, char** argv) {
     std::cout << "Policy.yaml has " << size << " bytes...\n";
 
     // setup temporary buffer and load the data for testing
-    //std::pair<char*, std::ptrdiff_t> result = std::get_temporary_buffer<char>(size);
-    //int bytesRead = 1957;
-    //read_handler(inbuf, result.first, result.second, &bytesRead);
+    std::pair<unsigned char*, std::ptrdiff_t> result = std::get_temporary_buffer<unsigned char>(size);
+    unsigned long int bytesRead = 0L;
+    read_handler(inbuf, result.first, result.second, &bytesRead);
+    for(int i = 0; i< bytesRead; i++) {
+      std::cout << result.first[i];
+    }
+    std::cout << "\n";
     //std::cout << "read_handler read " << bytesRead << " bytes...\n";
 
     // setup the parser objects
@@ -55,7 +59,7 @@ int read_handler(void* data, unsigned char* buffer, unsigned long int size, unsi
         size =((std::filebuf*)data)->in_avail();
     }
 
-    int bRead = ((std::filebuf*)data)->sgetn((char*)buffer, size);
-    *length = bRead;
+    int rRead = ((std::filebuf*)data)->sgetn((char*)buffer, size);
+    *length = rRead;
     return 0;
 }
