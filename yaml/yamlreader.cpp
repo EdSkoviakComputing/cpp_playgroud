@@ -9,7 +9,7 @@
 
 int main(int argc, char** argv) {
     // get the data from the file, determine the size
-    std::fstream fs ("models/Policy.yaml", std::fstream::in);
+    std::fstream fs ("./models/Policy.yaml", std::fstream::in);
     std::filebuf* inbuf = fs.rdbuf();
     std::streamsize size = inbuf->in_avail(); 
 
