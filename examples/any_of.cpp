@@ -1,26 +1,16 @@
 // any-of example
 
-// using strings
-
 #include <iostream>
 #include <algorithm>
 #include <array>
-#include <string>
 
-//bool fail(int i);
 int main(int argc, char** argv) {
 
-  std::array<int, 3> scores = {78, 85, 45};
+  std::array<int, 7> foo = {0,1,-1,3,-3,5,-5};
 
-/*
-  if (std::any_of(scores.begin(), scores.end(), fail(int i))) {
-    std::cout << "At least one failure was recorded\n";
-  }
-*/
-  std::cout << [1](int i){return i == 1;} << "\n";
+  if ( std::any_of(foo.begin(), foo.end(), [](int i){return i<0;}) )
+    std::cout << "There are negative elements in the range.\n";
+
   return 0;
 }
 
-bool fail(int i){
-  return i<70;
-}
