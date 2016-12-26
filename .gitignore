@@ -1,2 +1,4 @@
 a.out
 yamlreader
+any_of
+*.o
