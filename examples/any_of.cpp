@@ -16,12 +16,12 @@ int main(int argc, char** argv) {
 
   std::cout << "Test 1:\n---\n";
   if ( std::any_of(bar.begin(), bar.end(),
-    [test1](std::string s){return s.compare(test1);}))
+    [test1](std::string s){return s == test1; }))
     std::cout << test1 << " in bar\n";
 
   std::cout << "Test 2:\n---\n";
   if ( std::any_of(bar.begin(), bar.end(),
-    [test2](std::string s){return s.compare(test2);}))
+    [test2](std::string s){return s == test2; }))
     std::cout << test2 << " in bar\n";
 
   return 0;
