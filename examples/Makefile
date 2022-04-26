@@ -8,3 +8,6 @@ $(PROG) : $(OBJS)
 	$(CC) $(LDFLAGS) -o $(PROG) $(OBJS)
 any_of.o: any_of.cpp
 	$(CC) $(CPPFLAGS) -c any_of.cpp
+
+readfile : readfile.cxx
+	$(CC) $(CPPFLAGS) -o $@ $?
