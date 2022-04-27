@@ -2,6 +2,10 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+extern "C"{
+#include <string.h>
+}
+
 using namespace std;
 
 int main (int argc, char** argv) {
@@ -12,12 +16,14 @@ int main (int argc, char** argv) {
   }
 
   string line;
+  char* key;
   ifstream myfile (argv[1]);
   if (myfile.is_open())
   {
     while ( getline (myfile,line) )
     {
-      cout << line << '\n';
+       key = strtok(line, "=")
+       cout << line << '\t' << key << std::endl;
     }
     myfile.close();
   }
