@@ -4,3 +4,5 @@ any_of
 *.o
 
 .vscode
+
+**/build
