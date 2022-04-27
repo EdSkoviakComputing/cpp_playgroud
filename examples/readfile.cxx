@@ -2,13 +2,12 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-extern "C"{
-#include <string.h>
-}
+
 
 using namespace std;
 
 int main (int argc, char** argv) {
+  // check to see if an input file has been specified
   if(argc < 2)
   {
     std::cout << "Usage:  readfile <filename>" << std::endl;
@@ -16,18 +15,27 @@ int main (int argc, char** argv) {
   }
 
   string line;
-  char* key;
+  string::size_type pos;
   ifstream myfile (argv[1]);
   if (myfile.is_open())
   {
     while ( getline (myfile,line) )
     {
-       key = strtok(line, "=")
-       cout << line << '\t' << key << std::endl;
+      pos = line.find('#', 0);
+      if (pos == 0)
+      {
+        // entire line is comment
+        continue; 
+      }
+      else if (pos > 0)
+      {
+        // Trailing comment strip
+        line = line.substr(0, pos);
+      } 
+      cout << line << std::endl;
     }
     myfile.close();
   }
-
   else std::cout << "Unable to open file " << argv[1] << std::endl; 
 
   return 0;

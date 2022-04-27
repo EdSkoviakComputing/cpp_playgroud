@@ -1,2 +1,3 @@
-SOMEURL=https://myurl.com
+# This is a comment
+SOMEURL=https://myurl.com  # Trailing Comment
 MYDUMMY=akey
