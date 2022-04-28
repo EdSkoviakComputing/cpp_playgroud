@@ -2,9 +2,11 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-
+#include <map>
 
 using namespace std;
+
+std::string ltrim(std::string);
 
 int main (int argc, char** argv) {
   // check to see if an input file has been specified
@@ -16,6 +18,7 @@ int main (int argc, char** argv) {
 
   string line;
   string::size_type pos;
+  std::map<string, string> config;
   ifstream myfile (argv[1]);
   if (myfile.is_open())
   {
@@ -24,19 +27,42 @@ int main (int argc, char** argv) {
       pos = line.find('#', 0);
       if (pos == 0)
       {
-        // entire line is comment
+        // entire line is comment -- skip
         continue; 
       }
       else if (pos > 0)
       {
-        // Trailing comment strip
+        // Trailing commen -- strip
         line = line.substr(0, pos);
-      } 
-      cout << line << std::endl;
-    }
+      }
+	  // look for the '=' sign	
+	  pos = line.find('=');
+	  config[ltrim(line.substr(0,pos))]=ltrim(line.substr(pos+1));
+	}
+	for(auto& [key, value]: config)
+	{
+		cout << key << ':' << value  << std::endl;
+	}
     myfile.close();
   }
   else std::cout << "Unable to open file " << argv[1] << std::endl; 
 
   return 0;
 }
+
+std::string ltrim(std::string in)
+{
+	std::string::size_type pos;
+	pos = in.find(' ');
+	if(pos == std::string::npos)
+	{
+		return in;
+	} 
+	else if(pos == in.size()) 
+	{
+	
+		//must be empty line
+		return std::string("\0");
+	}
+	else return ltrim(in.substr(pos+1));
+}	
