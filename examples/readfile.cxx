@@ -3,6 +3,7 @@
 #include <fstream>
 #include <string>
 #include <map>
+#include <regex>
 
 using namespace std;
 
@@ -24,6 +25,11 @@ int main (int argc, char** argv) {
   {
     while ( getline (myfile,line) )
     {
+      if(line.size() == 0)
+      {
+	// empty line
+	continue;
+      }
       pos = line.find('#', 0);
       if (pos == 0)
       {
@@ -32,17 +38,18 @@ int main (int argc, char** argv) {
       }
       else if (pos > 0)
       {
-        // Trailing commen -- strip
+        // Trailing comment -- strip
         line = line.substr(0, pos);
       }
-	  // look for the '=' sign	
-	  pos = line.find('=');
-	  config[ltrim(line.substr(0,pos))]=ltrim(line.substr(pos+1));
-	}
-	for(auto& [key, value]: config)
-	{
-		cout << key << ':' << value  << std::endl;
-	}
+      
+      // look for the '=' sign	
+      pos = line.find('=');
+      config[ltrim(line.substr(0,pos))]=ltrim(line.substr(pos+1));
+    }
+    for(auto& [key, value]: config)
+    {
+	cout << key << ':' << value  << std::endl;
+    }
     myfile.close();
   }
   else std::cout << "Unable to open file " << argv[1] << std::endl; 
@@ -50,7 +57,7 @@ int main (int argc, char** argv) {
   return 0;
 }
 
-std::string ltrim(std::string in)
+std::string ltrim_old(std::string in)
 {
 	std::string::size_type pos;
 	pos = in.find(' ');
@@ -64,5 +71,11 @@ std::string ltrim(std::string in)
 		//must be empty line
 		return std::string("\0");
 	}
-	else return ltrim(in.substr(pos+1));
-}	
+	else return ltrim_old(in.substr(pos+1));
+}
+
+std::string ltrim(std::string in)
+{
+	std::regex e ("(^\\s*)([^ ]*)");
+	return std::regex_replace(in, e, "$2");
+}
