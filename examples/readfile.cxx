@@ -25,11 +25,6 @@ int main (int argc, char** argv) {
   {
     while ( getline (myfile,line) )
     {
-      if(line.size() == 0)
-      {
-	// empty line
-	continue;
-      }
       pos = line.find('#', 0);
       if (pos == 0)
       {
@@ -41,7 +36,14 @@ int main (int argc, char** argv) {
         // Trailing comment -- strip
         line = line.substr(0, pos);
       }
-      
+
+      // remove lines with just spaces
+      if(ltrim(line).size() == 0)
+      {
+	        // empty line
+	        continue;
+      }
+
       // look for the '=' sign	
       pos = line.find('=');
       config[ltrim(line.substr(0,pos))]=ltrim(line.substr(pos+1));
