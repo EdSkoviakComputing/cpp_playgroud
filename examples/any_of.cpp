@@ -7,7 +7,7 @@
 int main(int argc, char** argv) {
 
 //  std::array<int, 7> foo = {0,1,-1,3,-3,5,-5};
-  std::array<std::string, 3> bar = {"un", "deux", "trois"};
+  std::array<std::string, 3> bar = {"un", "dex", "trois"};
   
 //  if ( std::any_of(foo.begin(), foo.end(), [](int i){return i<-6;}) )
 //    std::cout << "There are negative elements in the range.\n";
