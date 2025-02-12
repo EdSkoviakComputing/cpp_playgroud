@@ -7,7 +7,7 @@ void algorithm_signed ( int i)
 
 void algorithm_unsigned (unsigned u)
 {
-	fprintf(stdout, "%d is unsidned\n", u);
+	fprintf(stdout, "%d is unsigned\n", u);
 }
 
 template<typename T>

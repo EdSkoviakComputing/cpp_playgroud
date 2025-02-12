@@ -2,3 +2,6 @@ a.out
 yamlreader
 any_of
 *.o
+
+**/.DS_Store
+**/.vscode
